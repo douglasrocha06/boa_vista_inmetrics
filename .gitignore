@@ -1,0 +1,10 @@
+#File terraform 
+
+*.code-workspace
+*.lock.hcl
+*.tfstate.backup
+*.terraform
+*.tfstate
+*.tfstate.lock.info
+*bv_variables.tf
+*gitlab-ci.yml

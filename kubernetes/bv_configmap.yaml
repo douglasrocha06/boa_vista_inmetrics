@@ -1,0 +1,28 @@
+# # Configmap para utilização do banco no kubernetes
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: configmap-aplicacao
+# data:
+#   MYSQL_DATABASE_USER: "root"
+#   MYSQL_DATABASE_PASSWORD: "1234"
+#   MYSQL_DATABASE_DB: "api_clientes"
+#   MYSQL_DATABASE_HOST: "svc-banco-de-dados"
+
+#   MYSQL_ROOT_PASSWORD: "1234"
+#   MYSQL_DATABASE: "api_clientes"
+# ---
+
+#Configmap para utilização do banco no CloudSQL
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-aplicacao
+data:
+  MYSQL_DATABASE_USER: "root"
+  MYSQL_DATABASE_PASSWORD: "boavista1234"
+  MYSQL_DATABASE_DB: "api_clientes"
+  MYSQL_DATABASE_HOST: "34.134.190.247"
+
+  MYSQL_ROOT_PASSWORD: "boavista1234"
+  MYSQL_DATABASE: "api_clientes"

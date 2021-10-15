@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplicacao-deployment
+  labels:
+    app: aplicacao
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aplicacao
+  template:
+    metadata:
+      labels:
+        app: aplicacao
+    spec:
+      containers:
+      - name: aplicacao-container
+        image: douglasrocha06/clientes
+        ports:
+          - containerPort: 5100
+        envFrom:
+          - configMapRef:
+              name: configmap-aplicacao
+              
+        # Verificar se o pod está vivo ou morto
+        livenessProbe: 
+              httpGet:
+                path: /
+                port: 5100
+              periodSeconds: 10 
+              failureThreshold: 3
+              initialDelaySeconds: 20
+        
+        # Verificar se o pod está pronto para receber requisição
+        readinessProbe:
+              httpGet:
+                path: /
+                port: 5100
+              periodSeconds: 10 
+              failureThreshold: 5
+              initialDelaySeconds: 5 
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1Gi
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: banco-de-dados
+#   labels:
+#     app: banco-de-dados
+# spec:
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: banco-de-dados
+#   template:
+#     metadata:
+#       labels:
+#         app: banco-de-dados
+#     spec:
+#       containers:
+#       - name: banco-de-dados
+#         image: douglasrocha06/banco_de_dados
+#         ports:
+#           - containerPort: 3306
+#         envFrom:
+#           - configMapRef:
+#               name: configmap-aplicacao

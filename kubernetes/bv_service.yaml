@@ -1,0 +1,26 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: svc-banco-de-dados
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - name: banco-de-dados
+#       protocol: "TCP"
+#       port: 3306
+#       targetPort: 3306
+#   selector:
+#     app: banco-de-dados
+# ---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-aplicacao
+spec:
+  selector:
+    app: aplicacao
+  type: LoadBalancer
+  ports:
+    - port: 5100
+      targetPort: 5100

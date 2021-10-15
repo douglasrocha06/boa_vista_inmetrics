@@ -1,0 +1,54 @@
+#LB do prometheus
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+      prometheus.io/probe: 'true'
+spec:
+  selector: 
+    app: prometheus-server
+  type: LoadBalancer  
+  ports:
+    - port: 9090  
+      targetPort: 9090 
+---
+
+#Cluster IP grafana
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+  selector:
+    app: grafana
+  sessionAffinity: None
+  type: LoadBalancer
+---
+
+#Service do kube state metrics
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-state-metrics
+    app.kubernetes.io/version: v1.8.0
+  name: kube-state-metrics
+  namespace: kube-system
+spec:
+  clusterIP: None
+  ports:
+  - name: http-metrics
+    port: 8080
+    targetPort: http-metrics
+  - name: telemetry
+    port: 8081
+    targetPort: telemetry
+  selector:
+    app.kubernetes.io/name: kube-state-metrics
